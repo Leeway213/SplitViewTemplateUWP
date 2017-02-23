@@ -47,7 +47,8 @@ namespace SplitViewTemplate.Modules.MainFrame.ViewModel
         {
             get
             {
-                return new RelayCommand(() =>
+
+return new RelayCommand(() =>
                 {
                     Messenger.Default.Send(NaviList, "selectedIndex");
                     //To-Do: 跳转到首页
@@ -99,6 +100,22 @@ namespace SplitViewTemplate.Modules.MainFrame.ViewModel
 
         public FramePageViewModel()
         {
+            var bounds = Window.Current.CoreWindow.Bounds;
+            if (bounds.Width > 900)
+            {
+                SplitViewMode = SplitViewDisplayMode.CompactInline;
+                IsPaneOpen = true;
+            }
+            else if (bounds.Width > 550)
+            {
+                SplitViewMode = SplitViewDisplayMode.CompactOverlay;
+                IsPaneOpen = false;
+            }
+            else
+            {
+                SplitViewMode = SplitViewDisplayMode.Overlay;
+                IsPaneOpen = false;
+            }
             NaviList = new ObservableCollection<NaviListModel>();
             AddPages();
         }
